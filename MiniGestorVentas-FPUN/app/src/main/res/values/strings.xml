@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Mini Gestor Ventas - FPUNA</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_pedido">PedidoActivity</string>
+    <string name="title_activity_pedido">Gestión de Pedidos</string>
+    <string name="title_activity_listar_pedidos_generados">Lista de Pedidos</string>
 </resources>

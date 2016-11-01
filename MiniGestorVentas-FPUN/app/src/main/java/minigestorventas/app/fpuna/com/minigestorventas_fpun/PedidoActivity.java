@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,6 +180,7 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
                 /*Log.i("Detalle 1", String.valueOf(db.buscarPedidoDetalle(1)));
                 Log.i("Detalle 2", String.valueOf(db.buscarPedidoDetalle(2)));
                 Log.i("Detalle 3", String.valueOf(db.buscarPedidoDetalle(3)));*/
+                Toast.makeText(getApplicationContext(), "Pedido Registrado, regrese al menú Principal, por favor", Toast.LENGTH_SHORT).show();
 
             }
 

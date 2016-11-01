@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView tvCedula;
     int idPasar;
     Button botonSgte;
+    Button botonPedidos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvTelefono = (TextView) findViewById(R.id.tvTelefono);
         tvCedula = (TextView) findViewById(R.id.tvCedula);
         botonSgte = (Button) findViewById(R.id.botonSiguiente);
+        botonPedidos = (Button) findViewById(R.id.botonPedidos);
         botonSgte.setOnClickListener(this);
+        botonPedidos.setOnClickListener(this);
 
         //se carga los valores para el spinner
         List<ItemSpinner> spinnerClientes = new ArrayList<ItemSpinner>();
@@ -153,6 +156,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(MainActivity.this, PedidoActivity.class);
                 intent.putExtra("idCliente", parametro);
                 startActivity(intent);
+                break;
+            case R.id.botonPedidos:
+                Intent intent2 = new Intent(MainActivity.this, ListarPedidosGenerados.class);
+                startActivity(intent2);
                 break;
         }
     }

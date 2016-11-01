@@ -21,7 +21,6 @@ public class PedidoDetalle {
     }
 
 
-
     public int getIdCabecera() {
         return idCabecera;
     }
@@ -63,4 +62,6 @@ public class PedidoDetalle {
                 ", subTotal=" + subTotal +
                 '}';
     }
+
+
 }

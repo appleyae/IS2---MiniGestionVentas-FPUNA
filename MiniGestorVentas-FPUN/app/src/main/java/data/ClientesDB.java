@@ -377,6 +377,36 @@ public class ClientesDB {
 
     }
 
+     public ArrayList buscarPedidoDetalleLindo (int id) {
+
+        this.openReadableDB();
+        String where = ConstantsDB.DETALLE_ID_PEDIDO + "= ?";
+        String[] whereArgs = {String.valueOf(id)};
+        String[] campos = new String[]{DETALLE_ID_PEDIDO, DETALLE_COD_PRODUCTO, DETALLE_CANTIDAD_PRODUCTO, DETALLE_SUBTOTAL};
+        Cursor c = db.query(ConstantsDB.TABLA_PEDIDO_DETALLE, campos, where, whereArgs, null, null, null);
+        ArrayList <ItemSpinner> list = new ArrayList<ItemSpinner>();
+
+        this.openReadableDB();
+
+        try {
+            while (c.moveToNext()) {
+                ItemSpinner cargar = new ItemSpinner();
+                Producto producto = this.buscarProducto(c.getInt(1));
+
+                cargar.setCodigo(c.getInt(0));
+                cargar.setDescripcion(producto.getDescripcion() + "; Cantidad: " + String.valueOf(c.getInt(2))
+                + "; Subtotal: " + String.valueOf(c.getInt(3)));
+                list.add(cargar);
+            }
+        } finally {
+            c.close();
+        }
+        this.closeDB();
+
+        return list;
+
+    }
+
     public int countClientes(){
 
         this.openReadableDB();
