@@ -37,6 +37,7 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
     int idCliente;
     TextView totalView;
     TextView tvPrecioUnit;
+    TextView tvSubTotalPedido;
     Spinner spinner_producto;
     Spinner spinner_cantidad;
     int idProductoSelect;
@@ -71,6 +72,7 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
         botonAgregar = (Button) findViewById(R.id.botonAgregar);
         botonRegistrar = (Button) findViewById(R.id.botonRegistrar);
         tvPrecioUnit = (TextView) findViewById(R.id.tvPrecioUnit);
+        tvSubTotalPedido = (TextView) findViewById(R.id.subTotalProducto);
 
         if (extra != null){
             idCliente = extra.getInt("idCliente");
@@ -86,8 +88,10 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
 
         //para el spinner
         final List<Producto> listaProducto = db.loadProductos();
-        List<ItemSpinner> spinnerProductos = new ArrayList<ItemSpinner>();
+        final List<ItemSpinner> spinnerProductos = new ArrayList<ItemSpinner>();
         Log.i("un producto--> :", String.valueOf(listaProducto.get(1).getDescripcion()));
+        ItemSpinner cargar1 = new ItemSpinner(0, "Seleccione el producto.");
+        spinnerProductos.add(cargar1);
         for(Producto producto : listaProducto) {
             ItemSpinner cargar = new ItemSpinner(producto.getId(), producto.getDescripcion());
             spinnerProductos.add(cargar);
@@ -98,7 +102,7 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
 
         List<ItemSpinner> cantidadVenta = new ArrayList<ItemSpinner>();
 
-        for (int i=1; i<=50; i++ ){
+        for (int i=0; i<=50; i++ ){
             ItemSpinner cargar2 = new ItemSpinner(i, String.valueOf(i));
             cantidadVenta.add(cargar2);
         }
@@ -113,7 +117,12 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 idProductoSelect = position;
-                tvPrecioUnit.setText(String.valueOf (listaProducto.get(position).getPrecio()));
+                if (idProductoSelect == 0 ){
+                    tvPrecioUnit.setText(String.valueOf (0));
+                } else{
+                    tvPrecioUnit.setText(String.valueOf (listaProducto.get(position-1).getPrecio()));
+                }
+
                 Log.i("seleccionaProducto: pos", String.valueOf(position));
             }
 
@@ -128,7 +137,10 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                idCantidadSelect = position + 1;
+                idCantidadSelect = position;
+                if (idProductoSelect != 0 ){
+                    tvSubTotalPedido.setText(String.valueOf (listaProducto.get(idProductoSelect-1).getPrecio()*idCantidadSelect));
+                }
 
 
                 Log.i("cantidadSelect", String.valueOf(position));
@@ -144,25 +156,35 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
             public void onClick(View v) {
                 Log.i("botonAgregar: ", "hace click");
                 DetallePedido detalle = new DetallePedido();
-                Producto producto = db.buscarProducto(idProductoSelect);
-                detalle.setCantidadPedido(idCantidadSelect);
-                detalle.setDescripcionProducto(producto.getDescripcion());
-                detalle.setIdProducto(idProductoSelect);
-                detalle.setSubtotal(producto.getPrecio()*idCantidadSelect);
+                Log.i("botonAgegar:", "valor:" + String.valueOf(idProductoSelect));
+                if (idProductoSelect == 0){
+                    Toast.makeText(getApplicationContext(), "Por favor, seleccione un producto", Toast.LENGTH_SHORT).show();
+                }else if (idCantidadSelect == 0){
+                    Toast.makeText(getApplicationContext(), "Por favor, agregue una cantidad válida", Toast.LENGTH_SHORT).show();
+                }else{
+                    Producto producto = db.buscarProducto(idProductoSelect-1);
+                    detalle.setCantidadPedido(idCantidadSelect);
+                    detalle.setDescripcionProducto(producto.getDescripcion());
+                    detalle.setIdProducto(idProductoSelect-1);
+                    detalle.setSubtotal(producto.getPrecio()*idCantidadSelect);
 
-                Log.i("botonAgregar: ", detalle.toString());
-                listViewPedidos.add(detalle);
-                List<ItemSpinner> listaDetalle = new ArrayList<ItemSpinner>();
+                    Log.i("botonAgregar: ", detalle.toString());
+                    listViewPedidos.add(detalle);
+                    List<ItemSpinner> listaDetalle = new ArrayList<ItemSpinner>();
 
-               ArrayAdapter<DetallePedido> arrayAdapter = new ArrayAdapter<DetallePedido>
-                        (getApplicationContext(), android.R.layout.simple_list_item_activated_1, listViewPedidos);
-                detalleDeLosPedidos.setAdapter(arrayAdapter);
+                    ArrayAdapter<DetallePedido> arrayAdapter = new ArrayAdapter<DetallePedido>
+                            (getApplicationContext(), android.R.layout.simple_list_item_activated_1, listViewPedidos);
+                    detalleDeLosPedidos.setAdapter(arrayAdapter);
 
 
-                Log.i("botonAgregar: ", "detallenuevo: "+ detalle.toString());
-                Log.i("botonAgregar: ", "array: "+ listViewPedidos.toString());
-                totalPedido = totalPedido + detalle.getSubtotal();
-                totalView.setText(String.valueOf(totalPedido));
+                    Log.i("botonAgregar: ", "detallenuevo: "+ detalle.toString());
+                    Log.i("botonAgregar: ", "array: "+ listViewPedidos.toString());
+                    totalPedido = totalPedido + detalle.getSubtotal();
+                    totalView.setText(String.valueOf(totalPedido));
+                }
+                spinner_producto.setSelection(0);
+                spinner_cantidad.setSelection(0);
+
             }
         });
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
@@ -180,8 +202,8 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
                 /*Log.i("Detalle 1", String.valueOf(db.buscarPedidoDetalle(1)));
                 Log.i("Detalle 2", String.valueOf(db.buscarPedidoDetalle(2)));
                 Log.i("Detalle 3", String.valueOf(db.buscarPedidoDetalle(3)));*/
-                Toast.makeText(getApplicationContext(), "Pedido Registrado, regrese al menú Principal, por favor", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getApplicationContext(), "Pedido Registrado!", Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
 
         });
