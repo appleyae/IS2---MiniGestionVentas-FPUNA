@@ -93,8 +93,8 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
             ItemSpinner cargar = new ItemSpinner(producto.getId(), producto.getDescripcion());
             spinnerProductos.add(cargar);
         }
-        ArrayAdapter<ItemSpinner> productos = new ArrayAdapter<ItemSpinner>(this, android.R.layout.simple_spinner_dropdown_item, spinnerProductos);
-        productos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<ItemSpinner> productos = new ArrayAdapter<ItemSpinner>(this, R.layout.spinner, spinnerProductos);
+        productos.setDropDownViewResource(R.layout.spinner);
         spinner_producto.setAdapter(productos);
 
         spinner_producto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
@@ -111,8 +111,8 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
                         ItemSpinner cargar2 = new ItemSpinner(i, String.valueOf(i));
                         cantidadVenta.add(cargar2);
                     }
-                    ArrayAdapter<ItemSpinner> cantidades = new ArrayAdapter<ItemSpinner>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, cantidadVenta);
-                    cantidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    ArrayAdapter<ItemSpinner> cantidades = new ArrayAdapter<ItemSpinner>(getApplicationContext(), R.layout.spinner, cantidadVenta);
+                    cantidades.setDropDownViewResource(R.layout.spinner);
 
                     spinner_cantidad.setAdapter(cantidades);
                     spinner_cantidad.setSelection(0);
@@ -127,8 +127,8 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
                         ItemSpinner cargar2 = new ItemSpinner(i, String.valueOf(i));
                         cantidadVenta.add(cargar2);
                     }
-                    ArrayAdapter<ItemSpinner> cantidades = new ArrayAdapter<ItemSpinner>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, cantidadVenta);
-                    cantidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    ArrayAdapter<ItemSpinner> cantidades = new ArrayAdapter<ItemSpinner>(getApplicationContext(), R.layout.spinner, cantidadVenta);
+                    cantidades.setDropDownViewResource(R.layout.spinner);
 
                     spinner_cantidad.setAdapter(cantidades);
                     spinner_cantidad.setSelection(0);
@@ -185,7 +185,7 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
                     List<ItemSpinner> listaDetalle = new ArrayList<ItemSpinner>();
 
                     ArrayAdapter<DetallePedido> arrayAdapter = new ArrayAdapter<DetallePedido>
-                            (getApplicationContext(), android.R.layout.simple_list_item_activated_1, listViewPedidos);
+                            (getApplicationContext(), R.layout.spinner, listViewPedidos);
                     detalleDeLosPedidos.setAdapter(arrayAdapter);
 
 

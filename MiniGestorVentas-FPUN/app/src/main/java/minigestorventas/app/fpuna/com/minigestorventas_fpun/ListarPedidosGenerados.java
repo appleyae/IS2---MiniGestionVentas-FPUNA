@@ -66,8 +66,8 @@ public class ListarPedidosGenerados extends AppCompatActivity {
             spinnerCabeceras.add(cargar);
         }
         ArrayAdapter<ItemSpinner> pedidos = new ArrayAdapter<ItemSpinner>
-                (this, android.R.layout.simple_spinner_dropdown_item, spinnerCabeceras);
-        pedidos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                (this, R.layout.spinner, spinnerCabeceras);
+        pedidos.setDropDownViewResource(R.layout.spinner);
         spinnerPedidos.setAdapter(pedidos);
         spinnerPedidos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
@@ -99,7 +99,7 @@ public class ListarPedidosGenerados extends AppCompatActivity {
                     List<ItemSpinner> listaDetalle = new ArrayList<ItemSpinner>();
 
                     ArrayAdapter<ItemSpinner> arrayAdapter = new ArrayAdapter<ItemSpinner>
-                            (getApplicationContext(), android.R.layout.simple_list_item_activated_1, listViewPedidos);
+                            (getApplicationContext(), R.layout.spinner, listViewPedidos);
                     listaDetalles.setAdapter(arrayAdapter);
                     tvTotalPedido.setText("Total del pedido: " + String.valueOf(finalListaCabecera.get(idprueba).getTotalPedido()));
                 }

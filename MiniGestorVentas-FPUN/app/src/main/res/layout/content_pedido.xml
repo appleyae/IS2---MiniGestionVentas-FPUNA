@@ -26,6 +26,7 @@
     <Spinner
         android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:textColor="#000000"
         android:id="@+id/spinner_cantidad"
         android:layout_alignTop="@+id/spinner_productos"
         android:layout_toRightOf="@+id/spinner_productos"
