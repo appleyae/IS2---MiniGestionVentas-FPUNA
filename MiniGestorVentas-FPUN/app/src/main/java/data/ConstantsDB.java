@@ -8,7 +8,7 @@ public class ConstantsDB {
 
     //General
     public static final String DB_NAME ="gestionventas.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
 
     //TABLAS USADAS

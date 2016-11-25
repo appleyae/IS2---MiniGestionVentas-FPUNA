@@ -147,7 +147,7 @@ public class ClientesDB {
             this.openWriteableDB();
             //inserta en el detalle fila por fila
             long rowID2 = db.insert(ConstantsDB.TABLA_PEDIDO_DETALLE, null, pedidoDetalleMapperContentValues(pedido2));
-
+            descontarStock(pedido);
             this.closeDB();
         }
         Log.i("-----------","--------------");
@@ -173,6 +173,17 @@ public class ClientesDB {
     }
 
     public void updateProducto(Producto producto) {
+        this.openWriteableDB();
+        String where = ConstantsDB.PRO_ID + "= ?";
+        db.update(ConstantsDB.TABLA_PRODUCTOS, productoMapperContentValues(producto), where,
+                new String[]{String.valueOf(producto.getId())});
+        db.close();
+    }
+
+    public void descontarStock(DetallePedido detallePedido) {
+        Producto producto = buscarProducto(detallePedido.getIdProducto());
+        int cantidadNueva = producto.getStock() - detallePedido.getCantidadPedido(); //descontamos el valor del stock
+        producto.setStock(cantidadNueva);
         this.openWriteableDB();
         String where = ConstantsDB.PRO_ID + "= ?";
         db.update(ConstantsDB.TABLA_PRODUCTOS, productoMapperContentValues(producto), where,

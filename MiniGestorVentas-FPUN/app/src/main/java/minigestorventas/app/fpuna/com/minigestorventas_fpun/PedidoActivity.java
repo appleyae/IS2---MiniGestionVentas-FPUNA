@@ -100,17 +100,6 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
         productos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_producto.setAdapter(productos);
 
-        List<ItemSpinner> cantidadVenta = new ArrayList<ItemSpinner>();
-
-        for (int i=0; i<=50; i++ ){
-            ItemSpinner cargar2 = new ItemSpinner(i, String.valueOf(i));
-            cantidadVenta.add(cargar2);
-        }
-        ArrayAdapter<ItemSpinner> cantidades = new ArrayAdapter<ItemSpinner>(this, android.R.layout.simple_spinner_dropdown_item, cantidadVenta);
-        cantidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner_cantidad.setAdapter(cantidades);
-
         spinner_producto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
 
@@ -119,8 +108,34 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
                 idProductoSelect = position;
                 if (idProductoSelect == 0 ){
                     tvPrecioUnit.setText(String.valueOf (0));
+                    //empieza evento para cargar spinner_cantidad
+                    List<ItemSpinner> cantidadVenta = new ArrayList<ItemSpinner>();
+                    for (int i=0; i<=0; i++ ){
+                        ItemSpinner cargar2 = new ItemSpinner(i, String.valueOf(i));
+                        cantidadVenta.add(cargar2);
+                    }
+                    ArrayAdapter<ItemSpinner> cantidades = new ArrayAdapter<ItemSpinner>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, cantidadVenta);
+                    cantidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    spinner_cantidad.setAdapter(cantidades);
+                    spinner_cantidad.setSelection(0);
+                    //finaliza evento de cargar spinner_cantidad
                 } else{
                     tvPrecioUnit.setText(String.valueOf (listaProducto.get(position-1).getPrecio()));
+
+                    //empieza evento para cargar spinner_cantidad
+                    List<ItemSpinner> cantidadVenta = new ArrayList<ItemSpinner>();
+                    int cantidadstock= listaProducto.get(idProductoSelect-1).getStock();
+                    for (int i=0; i<=cantidadstock; i++ ){
+                        ItemSpinner cargar2 = new ItemSpinner(i, String.valueOf(i));
+                        cantidadVenta.add(cargar2);
+                    }
+                    ArrayAdapter<ItemSpinner> cantidades = new ArrayAdapter<ItemSpinner>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, cantidadVenta);
+                    cantidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    spinner_cantidad.setAdapter(cantidades);
+                    spinner_cantidad.setSelection(0);
+                    //finaliza evento de cargar spinner_cantidad
                 }
 
                 Log.i("seleccionaProducto: pos", String.valueOf(position));

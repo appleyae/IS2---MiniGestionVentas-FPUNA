@@ -107,19 +107,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mostrarClientesLog();
             }
             if (cantProductos == 0){
-                Producto producto = new Producto(0, "Pilsen'i", 2500, 250);
+                Producto producto = new Producto(0, "Pilsen'i", 2500, 200);
                 db.insertProducto(producto);
                 Log.i("primeraVezRun Producto", producto.toString());
-                producto = new Producto(1, "Coca Cola 3lts.", 13000, 250);
+                producto = new Producto(1, "Coca Cola 3lts.", 13000, 150);
                 db.insertProducto(producto);
                 Log.i("primeraVezRun Producto", producto.toString());
-                producto = new Producto(2, "Pringles", 10000, 250);
+                producto = new Producto(2, "Pringles", 10000, 75);
                 db.insertProducto(producto);
                 Log.i("primeraVezRun Producto", producto.toString());
-                producto = new Producto(3, "Doritos", 7000, 250);
+                producto = new Producto(3, "Doritos", 7000, 70);
                 db.insertProducto(producto);
                 Log.i("primeraVezRun Producto", producto.toString());
-                producto = new Producto(4, "Maní Tostado", 5000, 250);
+                producto = new Producto(4, "Maní Tostado", 5000, 30);
                 db.insertProducto(producto);
                 Log.i("primeraVezRun Producto", producto.toString());
                 mostrarProductosLog();
