@@ -1,8 +1,5 @@
 package minigestorventas.app.fpuna.com.minigestorventas_fpun;
-/*
-* Falta agregar la parte de registrar el pedido y ya estamos!!
-*
-* */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -206,19 +203,22 @@ public class PedidoActivity extends AppCompatActivity implements  View.OnClickLi
             @Override
             public void onClick(View v) {
                 Log.i("botonRegistrar", "empieza el evento");
-                PedidoCabecera pedidoCabecera = new PedidoCabecera();
-                pedidoCabecera.setId(db.countPedidos()+1);
-                pedidoCabecera.setCodCliente(idCliente);
-                pedidoCabecera.setTotalPedido(totalPedido);
+                if (listViewPedidos.size() == 0 ){
+                    Toast.makeText(getApplicationContext(), "No se encontraron pedidos a cargar", Toast.LENGTH_SHORT).show();
+                }else{
+                    PedidoCabecera pedidoCabecera = new PedidoCabecera();
+                    pedidoCabecera.setId(db.countPedidos()+1);
+                    pedidoCabecera.setCodCliente(idCliente);
+                    pedidoCabecera.setTotalPedido(totalPedido);
 
-                db.insertPedido(pedidoCabecera, listViewPedidos);
+                    db.insertPedido(pedidoCabecera, listViewPedidos);
 
-                Log.i("Cabecera", String.valueOf(db.loadPedidos()));
-                /*Log.i("Detalle 1", String.valueOf(db.buscarPedidoDetalle(1)));
-                Log.i("Detalle 2", String.valueOf(db.buscarPedidoDetalle(2)));
-                Log.i("Detalle 3", String.valueOf(db.buscarPedidoDetalle(3)));*/
-                Toast.makeText(getApplicationContext(), "Pedido Registrado!", Toast.LENGTH_SHORT).show();
-                onBackPressed();
+                    Log.i("Cabecera", String.valueOf(db.loadPedidos()));
+
+                    Toast.makeText(getApplicationContext(), "Pedido Registrado!", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }
+
             }
 
         });

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import data.Producto;
 public class ListarPedidosGenerados extends AppCompatActivity {
     ClientesDB db;
     Button botonMostrar;
+    Button botonVolverAtras;
     Spinner spinnerPedidos;
     ListView listaDetalles;
     TextView tvTotalPedido;
@@ -44,6 +46,7 @@ public class ListarPedidosGenerados extends AppCompatActivity {
 
         //Capturamos los ids de la parte gráfica
         botonMostrar = (Button) findViewById(R.id.boton_mostrar);
+        botonVolverAtras = (Button) findViewById(R.id.btnVolverAtras);
         spinnerPedidos = (Spinner)findViewById(R.id.spinner_pedidos);
         listaDetalles = (ListView)findViewById(R.id.lista_detalles);
         tvTotalPedido = (TextView)findViewById(R.id.tvTotalPedido);
@@ -51,6 +54,10 @@ public class ListarPedidosGenerados extends AppCompatActivity {
         List<ItemSpinner> spinnerCabeceras = new ArrayList<ItemSpinner>();
        ArrayList<PedidoCabecera> listaCabecera = new ArrayList<PedidoCabecera>();
         listaCabecera = db.loadPedidos();
+
+        if (listaCabecera.size() == 0){
+            Toast.makeText(getApplicationContext(), "No existen pedidos generados", Toast.LENGTH_SHORT).show();
+        }
         for(PedidoCabecera pedidoCabecera : listaCabecera) {
 
             Cliente cliente = db.buscarCliente(pedidoCabecera.getCodCliente());
@@ -82,15 +89,25 @@ public class ListarPedidosGenerados extends AppCompatActivity {
         botonMostrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.i("botonMostrar: ", "hace click");
-                DetallePedido detalle = new DetallePedido();
-                ArrayList<ItemSpinner> listViewPedidos = db.buscarPedidoDetalleLindo(idCabeceraSelected);
-                Log.i("botonMostrar ", listViewPedidos.toString());
-                List<ItemSpinner> listaDetalle = new ArrayList<ItemSpinner>();
+                if (finalListaCabecera.size() == 0) {
+                    Toast.makeText(getApplicationContext(), "No existen pedidos generados", Toast.LENGTH_SHORT).show();
+                } else {
 
-                ArrayAdapter<ItemSpinner> arrayAdapter= new ArrayAdapter<ItemSpinner>
-                        (getApplicationContext(), android.R.layout.simple_list_item_activated_1, listViewPedidos);
-                listaDetalles.setAdapter(arrayAdapter);
-                tvTotalPedido.setText("Total del pedido: " + String.valueOf(finalListaCabecera.get(idprueba).getTotalPedido()));
+                    DetallePedido detalle = new DetallePedido();
+                    ArrayList<ItemSpinner> listViewPedidos = db.buscarPedidoDetalleLindo(idCabeceraSelected);
+                    Log.i("botonMostrar ", listViewPedidos.toString());
+                    List<ItemSpinner> listaDetalle = new ArrayList<ItemSpinner>();
+
+                    ArrayAdapter<ItemSpinner> arrayAdapter = new ArrayAdapter<ItemSpinner>
+                            (getApplicationContext(), android.R.layout.simple_list_item_activated_1, listViewPedidos);
+                    listaDetalles.setAdapter(arrayAdapter);
+                    tvTotalPedido.setText("Total del pedido: " + String.valueOf(finalListaCabecera.get(idprueba).getTotalPedido()));
+                }
+            }
+        });
+        botonVolverAtras.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onBackPressed();
 
             }
         });
