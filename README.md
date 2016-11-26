@@ -9,9 +9,7 @@ Entrega final de la Aplicación
 > Android 4.0 (Ice Cream Sandwich) - SDK 15
 ##### Integrantes
 .
-> Eduardo Appleyard
-> María Paula Aguirre
-> Larissa Romero
-> José Antonio Cáceres
-Repositorio del trabajo práctico para Ing. de Software 2, FP-UNA 2016    
-Se actualizaron los repositorios con el código fuente final
+- Eduardo Appleyard
+- María Paula Aguirre
+- Larissa Romero
+- José Antonio Cáceres
