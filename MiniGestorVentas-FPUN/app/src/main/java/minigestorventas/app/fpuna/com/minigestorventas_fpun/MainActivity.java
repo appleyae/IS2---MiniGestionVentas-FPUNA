@@ -102,6 +102,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 db.insertCliente(cliente);
                 cliente = new Cliente(4, "Bimbo", "Paraguay", "Pedro Getto, Fernando De La Mora", "021525878", "80017837-2");
                 db.insertCliente(cliente);
+                cliente = new Cliente(5, "Nanking", "S.A.", "Palma 966 casi Colón", "021491508", "80038937-9");
+                db.insertCliente(cliente);
                 //Cliente cliente3 = new Cliente("Pedro","33333","pedro@mail.net");
                 //Cliente cliente4 = new Cliente("David","44444","david@mail.net");
                 mostrarClientesLog();
